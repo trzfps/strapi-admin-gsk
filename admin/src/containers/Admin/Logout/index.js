@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { request } from 'strapi-helper-plugin';
 import { get } from 'lodash';
 import { auth } from 'strapi-helper-plugin';
 import Wrapper from './components';
@@ -23,7 +24,9 @@ const Logout = ({ history: { push } }) => {
     });
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const requestURL = '/admin/logout';
+    await request(requestURL, { method: 'POST' });
     auth.clearAppStorage();
     push('/auth/login');
   };
