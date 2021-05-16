@@ -194,4 +194,9 @@ module.exports = {
       message: "Successfully destroyed session",
     });
   },
+  async isAuthenticated(ctx) {
+    ctx.send({
+      authorized: true,
+    });
+  }
 };

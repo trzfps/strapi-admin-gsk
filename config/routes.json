@@ -60,6 +60,11 @@
     },
     {
       "method": "POST",
+      "path": "/authenticated",
+      "handler": "authentication.isAuthenticated"
+    },
+    {
+      "method": "POST",
       "path": "/renew-token",
       "handler": "authentication.renewToken"
     },
