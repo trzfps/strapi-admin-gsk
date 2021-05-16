@@ -9,7 +9,7 @@ module.exports = strapi => ({
     strapi.app.use(async (ctx, next) => {
       if (
         ctx.request.header.cookie &&
-        ctx.request.header.cookie
+        ctx.request.header.cookie && ctx.request.headers.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[2]
       ) {
         const token = ctx.request.headers.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[2];
 
