@@ -17,6 +17,25 @@ import Wrapper from './components';
 
 const Logout = ({ history: { push } }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+    useEffect(
+        () => {
+
+            const isLogin = async () => {
+                try {
+                  const requestUrl = "/admin/users/me";
+                  const result = await request(requestUrl, { method: 'GET' });
+                  setUserInfo(result.data);
+                } catch (e) {
+                    console.log(e);
+                }
+                setLoadingComplete(true);
+            }   
+            isLogin();
+        },
+        []
+    );
 
   const handleGoToMe = () => {
     push({
@@ -33,31 +52,35 @@ const Logout = ({ history: { push } }) => {
 
   const toggle = () => setIsOpen(prev => !prev);
 
-  const userInfo = auth.getUserInfo();
-  const displayName =
-    userInfo && userInfo.firstname && userInfo.lastname
-      ? `${userInfo.firstname} ${userInfo.lastname}`
-      : get(userInfo, 'username', '');
+  
+  if(loadingComplete){
+    const displayName =
+      userInfo && userInfo.firstname && userInfo.lastname
+        ? `${userInfo.firstname} ${userInfo.lastname}`
+        : get(userInfo, 'username', '');
 
-  return (
-    <Wrapper>
-      <ButtonDropdown isOpen={isOpen} toggle={toggle}>
-        <DropdownToggle>
-          {displayName}
-          <FontAwesomeIcon icon="caret-down" />
-        </DropdownToggle>
-        <DropdownMenu className="dropDownContent">
-          <DropdownItem onClick={handleGoToMe} className="item">
-            <FormattedMessage id="app.components.Logout.profile" />
-          </DropdownItem>
-          <DropdownItem onClick={handleLogout}>
-            <FormattedMessage id="app.components.Logout.logout" />
-            <FontAwesomeIcon icon="sign-out-alt" />
-          </DropdownItem>
-        </DropdownMenu>
-      </ButtonDropdown>
-    </Wrapper>
-  );
+    return (
+      <Wrapper>
+        <ButtonDropdown isOpen={isOpen} toggle={toggle}>
+          <DropdownToggle>
+            {displayName}
+            <FontAwesomeIcon icon="caret-down" />
+          </DropdownToggle>
+          <DropdownMenu className="dropDownContent">
+            <DropdownItem onClick={handleGoToMe} className="item">
+              <FormattedMessage id="app.components.Logout.profile" />
+            </DropdownItem>
+            <DropdownItem onClick={handleLogout}>
+              <FormattedMessage id="app.components.Logout.logout" />
+              <FontAwesomeIcon icon="sign-out-alt" />
+            </DropdownItem>
+          </DropdownMenu>
+        </ButtonDropdown>
+      </Wrapper>
+    );
+
+  }
+
 };
 
 export default withRouter(Logout);
