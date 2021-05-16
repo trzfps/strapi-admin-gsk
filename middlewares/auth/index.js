@@ -8,8 +8,7 @@ module.exports = strapi => ({
 
     strapi.app.use(async (ctx, next) => {
       if (
-        ctx.request.header.cookie &&
-        ctx.request.header.cookie && ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))
+        ctx.request.header&& ctx.request.header.cookie 
       ) {
         const token = ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) ?  ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : null;
 
