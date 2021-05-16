@@ -195,7 +195,6 @@ module.exports = {
     });
   },
   async isAuthenticated(ctx) {
-    console.log(ctx);
     const token = ctx.request.header.cookie && ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) 
       ? ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : undefined;
 
