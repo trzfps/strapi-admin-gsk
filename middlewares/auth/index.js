@@ -12,7 +12,9 @@ module.exports = strapi => ({
         ctx.request.header.cookie &&
         ctx.request.header.cookie
       ) {
-        const token = ctx.request.headers.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));;
+        const token = ctx.request.headers.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'));
+
+        console.log('TOKEN', token);
 
         const { payload, isValid } = strapi.admin.services.token.decodeJwtToken(token);
 
