@@ -26,6 +26,7 @@ const Logout = ({ history: { push } }) => {
                 try {
                   const requestUrl = "/admin/users/me";
                   const result = await request(requestUrl, { method: 'GET' });
+                  console.log(result);
                   setUserInfo(result.data);
                 } catch (e) {
                     console.log(e);
