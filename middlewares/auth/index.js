@@ -7,14 +7,12 @@ module.exports = strapi => ({
     strapi.app.use(passportMiddleware);
 
     strapi.app.use(async (ctx, next) => {
-      console.log(ctx.request);
       if (
         ctx.request.header.cookie &&
         ctx.request.header.cookie
       ) {
         const token = ctx.request.headers.cookie.match(new RegExp('(^| )' + 'token' + '=([^;]+)'))[2];
 
-        console.log('TOKEN', token);
 
         const { payload, isValid } = strapi.admin.services.token.decodeJwtToken(token);
 
