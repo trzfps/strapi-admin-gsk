@@ -206,7 +206,9 @@ module.exports = {
     const { isValid, payload } = strapi.admin.services.token.decodeJwtToken(token);
 
     if (!isValid) {
-      return ctx.badRequest('Invalid token');
+      return  ctx.send({
+        authorized: false,
+      });
     }
     ctx.cookies.set("jwtToken", null);
     ctx.cookies.set("jwtToken.sig", null);
