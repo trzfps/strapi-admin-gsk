@@ -39,7 +39,7 @@ module.exports = {
       const { user } = ctx.state;
 
       const token = strapi.admin.services.token.createJwtToken(user);
-      ctx.cookies.set("token", token, {
+      ctx.cookies.set("jwtToken", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production" ? true : false,
         maxAge: 1000 * 60 * 60 * 24 * 14, // 14 Day Age
@@ -187,7 +187,7 @@ module.exports = {
     };
   },
   async logout(ctx) {
-    ctx.cookies.set("token", null);
+    ctx.cookies.set("jwtToken", null);
     ctx.cookies.set("token.sig", null);
     ctx.send({
       authorized: true,
