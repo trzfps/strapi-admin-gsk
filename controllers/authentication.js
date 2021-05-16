@@ -56,7 +56,8 @@ module.exports = {
   ]),
 
   renewToken(ctx) {
-    const { token } = ctx.request.body;
+    const token = ctx.request.header.cookie && ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) 
+    ? ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : undefined;
 
     if (token === undefined) {
       return ctx.badRequest('Missing token');
@@ -146,9 +147,16 @@ module.exports = {
 
     await strapi.telemetry.send('didCreateFirstAdmin');
 
+    const token = strapi.admin.services.token.createJwtToken(user);
+    ctx.cookies.set("jwtToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 1000 * 60 * 60 * 24 * 14, // 14 Day Age
+      domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
+    });
+
     ctx.body = {
       data: {
-        token: strapi.admin.services.token.createJwtToken(user),
         user: strapi.admin.services.user.sanitizeUser(user),
       },
     };
@@ -179,9 +187,17 @@ module.exports = {
 
     const user = await strapi.admin.services.auth.resetPassword(input);
 
+    const token = strapi.admin.services.token.createJwtToken(user);
+
+    ctx.cookies.set("jwtToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      maxAge: 1000 * 60 * 60 * 24 * 14, // 14 Day Age
+      domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
+    });
+
     ctx.body = {
       data: {
-        token: strapi.admin.services.token.createJwtToken(user),
         user: strapi.admin.services.user.sanitizeUser(user),
       },
     };
