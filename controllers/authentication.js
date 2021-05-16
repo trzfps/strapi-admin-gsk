@@ -38,9 +38,17 @@ module.exports = {
     ctx => {
       const { user } = ctx.state;
 
+      const token = strapi.admin.services.token.createJwtToken(user);
+      ctx.cookies.set("token", token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 14, // 14 Day Age
+        domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
+      });
+
       ctx.body = {
         data: {
-          token: strapi.admin.services.token.createJwtToken(user),
+          status: 'Authenticated',
           user: strapi.admin.services.user.sanitizeUser(ctx.state.user), // TODO: fetch more detailed info
         },
       };
