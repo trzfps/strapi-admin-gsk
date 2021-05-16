@@ -4,7 +4,7 @@
  *
  */
 /* eslint-disable */
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { get, upperFirst } from 'lodash';
 import { auth, LoadingIndicatorPage } from 'strapi-helper-plugin';
