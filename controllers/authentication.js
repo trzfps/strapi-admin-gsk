@@ -195,6 +195,20 @@ module.exports = {
     });
   },
   async isAuthenticated(ctx) {
+    const token = tx.request.headers.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2];
+
+    if (!token) {
+      return  ctx.send({
+        authorized: false,
+      });
+    }
+
+    const { isValid, payload } = strapi.admin.services.token.decodeJwtToken(token);
+
+    if (!isValid) {
+      return ctx.badRequest('Invalid token');
+    }
+
     ctx.send({
       authorized: true,
     });
