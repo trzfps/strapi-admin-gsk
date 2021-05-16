@@ -11,7 +11,7 @@ import { form, schema } from './utils';
 
 const ProfilePage = () => {
   const { goBack } = useHistory();
-  const onSubmitSuccessCb = data => auth.setUserInfo(data);
+  const onSubmitSuccessCb = data => data;
 
   const [
     { formErrors, initialData, isLoading, modifiedData, showHeaderLoader, showHeaderButtonLoader },
@@ -26,7 +26,7 @@ const ProfilePage = () => {
   ]);
 
   const headerLabel = useMemo(() => {
-    const userInfos = auth.getUserInfo();
+    const userInfos = onSubmitSuccessCb();
 
     if (modifiedData) {
       return modifiedData.username || `${modifiedData.firstname} ${modifiedData.lastname}`;
