@@ -49,7 +49,7 @@ module.exports = {
       ctx.body = {
         data: {
           status: 'Authenticated',
-          user: strapi.admin.services.user.sanitizeUser(ctx.state.user), // TODO: fetch more detailed info
+          user: strapi.admin.services.user.sanitizeUser(ctx.state.user),
         },
       };
     },
@@ -192,7 +192,7 @@ module.exports = {
     ctx.cookies.set("jwtToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 1000 * 60 * 60 * 15, // 15 min
+      maxAge: 1000 * 60 * 60 * 15,
       domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
     });
 
