@@ -63,6 +63,19 @@ const SOCIAL_LINKS = [
 
 const HomePage = ({ history: { push } }) => {
   const { error, isLoading, posts } = useFetch();
+  const [userInfo, setUserInfo] = useState(false);
+
+  
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  const getUserInfo = async () => {
+    const requestURL = '/admin/users/me';
+    const result = await request(requestURL, { method: 'GET' });
+    setUserInfo(result.data);
+
+  }
   // Temporary until we develop the menu API
   const { collectionTypes, singleTypes, isLoading: isLoadingForModels } = useModels();
 
@@ -89,7 +102,7 @@ const HomePage = ({ history: { push } }) => {
   const headerId = hasAlreadyCreatedContentTypes
     ? 'HomePage.greetings'
     : 'app.components.HomePage.welcome';
-  const username = get(auth.getUserInfo(), 'firstname', '');
+  const username = get(userInfo, 'firstname', '');
   const linkProps = hasAlreadyCreatedContentTypes
     ? {
         id: 'app.components.HomePage.button.blog',

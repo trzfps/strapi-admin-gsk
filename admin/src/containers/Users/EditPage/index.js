@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { get, isEmpty } from 'lodash';
-import { BaselineAlignment, useGlobalContext, SizedInput, auth } from 'strapi-helper-plugin';
+import { BaselineAlignment, useGlobalContext, SizedInput, auth, request } from 'strapi-helper-plugin';
 import { Col } from 'reactstrap';
 import { Padded } from '@buffetjs/core';
 import PropTypes from 'prop-types';
@@ -16,18 +16,31 @@ import { editValidation } from '../../../validations/users';
 import form from './utils/form';
 
 const EditPage = ({ canUpdate }) => {
+  const [userInfo, setUserInfo] = useState(false);
   const { settingsBaseURL } = useGlobalContext();
   const { formatMessage } = useIntl();
   const {
     params: { id },
   } = useRouteMatch(`${settingsBaseURL}/users/:id`);
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  
+  const getUserInfo = async () => {
+    const requestURL = '/admin/users/me';
+    const result = await request(requestURL, { method: 'GET' });
+    setUserInfo(result.data);
+
+  }
+
   const cbSuccess = data => {
-    const userInfos = auth.getUserInfo();
+    const userInfos = userInfo;
 
     // The user is updating themself
     if (data.id === userInfos.id) {
-      auth.setUserInfo(data);
+      return data;
     }
   };
   const [
