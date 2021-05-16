@@ -55,6 +55,11 @@
     },
     {
       "method": "POST",
+      "path": "/logout",
+      "handler": "authentication.logout"
+    },
+    {
+      "method": "POST",
       "path": "/renew-token",
       "handler": "authentication.renewToken"
     },
