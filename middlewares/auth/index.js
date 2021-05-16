@@ -7,6 +7,7 @@ module.exports = strapi => ({
     strapi.app.use(passportMiddleware);
 
     strapi.app.use(async (ctx, next) => {
+      console.log(ctx.request);
       if (
         ctx.request.headers.cookie &&
         ctx.request.headers.cookie.token
