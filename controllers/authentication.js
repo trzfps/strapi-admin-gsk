@@ -188,7 +188,7 @@ module.exports = {
   },
   async logout(ctx) {
     ctx.cookies.set("jwtToken", null);
-    ctx.cookies.set("token.sig", null);
+    ctx.cookies.set("jwtToken.sig", null);
     ctx.send({
       authorized: true,
       message: "Successfully destroyed session",
@@ -208,7 +208,8 @@ module.exports = {
     if (!isValid) {
       return ctx.badRequest('Invalid token');
     }
-
+    ctx.cookies.set("jwtToken", null);
+    ctx.cookies.set("jwtToken.sig", null);
     ctx.send({
       authorized: true,
     });
