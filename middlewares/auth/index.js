@@ -8,10 +8,10 @@ module.exports = strapi => ({
 
     strapi.app.use(async (ctx, next) => {
       if (
-        ctx.request.header.authorization &&
-        ctx.request.header.authorization.split(' ')[0] === 'Bearer'
+        ctx.request.headers.cookie &&
+        ctx.request.headers.cookie.token
       ) {
-        const token = ctx.request.header.authorization.split(' ')[1];
+        const token = ctx.request.headers.cookie.token;
 
         const { payload, isValid } = strapi.admin.services.token.decodeJwtToken(token);
 
