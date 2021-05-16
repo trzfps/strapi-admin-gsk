@@ -100,7 +100,7 @@ const redirectWithAuth = ctx => {
 
   const isProduction = strapi.config.environment === 'production';
 
-  const cookiesOptions = { httpOnly: false, secure: isProduction, overwrite: true };
+  const cookiesOptions = { httpOnly: true, secure: isProduction, overwrite: true };
 
   strapi.eventHub.emit('admin.auth.success', { user, provider });
 

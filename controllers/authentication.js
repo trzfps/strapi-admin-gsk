@@ -42,8 +42,7 @@ module.exports = {
       ctx.cookies.set("jwtToken", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production" ? true : false,
-        maxAge: 1000 * 60 * 60 * 15,
-        domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
+        maxAge: 1000 * 60 * 15,
       });
 
       ctx.body = {
@@ -151,8 +150,7 @@ module.exports = {
     ctx.cookies.set("jwtToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 1000 * 60 * 60 * 15,
-      domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
+      maxAge: 1000 * 60 * 15,
     });
 
     ctx.body = {
@@ -192,8 +190,7 @@ module.exports = {
     ctx.cookies.set("jwtToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
-      maxAge: 1000 * 60 * 60 * 15,
-      domain: process.env.NODE_ENV === "development" ? "localhost" : process.env.PRODUCTION_URL,
+      maxAge: 1000 * 60 * 15,
     });
 
     ctx.body = {
@@ -202,6 +199,7 @@ module.exports = {
       },
     };
   },
+
   async logout(ctx) {
     ctx.cookies.set("jwtToken", null);
     ctx.cookies.set("jwtToken.sig", null);
@@ -210,6 +208,7 @@ module.exports = {
       message: "Successfully destroyed session",
     });
   },
+
   async isAuthenticated(ctx) {
     const token = ctx.request.header.cookie && ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) 
       ? ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : undefined;
