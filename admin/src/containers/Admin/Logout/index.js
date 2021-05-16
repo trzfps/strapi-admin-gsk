@@ -5,7 +5,7 @@
  */
 
 /* eslint-disable */
-import React, { useState, useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
