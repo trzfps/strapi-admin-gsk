@@ -195,7 +195,7 @@ module.exports = {
     });
   },
   async isAuthenticated(ctx) {
-    const token = tx.request.headers.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2];
+    const token = ctx.request.headers.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2];
 
     if (!token) {
       return  ctx.send({
