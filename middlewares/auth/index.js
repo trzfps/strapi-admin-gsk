@@ -9,9 +9,9 @@ module.exports = strapi => ({
     strapi.app.use(async (ctx, next) => {
       if (
         ctx.request.header.cookie &&
-        ctx.request.header.cookie && ctx.request.headers.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))
+        ctx.request.header.cookie && ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))
       ) {
-        const token = ctx.request.headers.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) ?  ctx.request.headers.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : null;
+        const token = ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) ?  ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : null;
 
 
         const { payload, isValid } = strapi.admin.services.token.decodeJwtToken(token);
