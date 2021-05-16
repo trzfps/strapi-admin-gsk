@@ -163,8 +163,8 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
         cancelToken: source.token,
       });
 
-      auth.setToken(token, modifiedData.rememberMe);
-      auth.setUserInfo(user, modifiedData.rememberMe);
+      // auth.setToken(token, modifiedData.rememberMe);
+      // auth.setUserInfo(user, modifiedData.rememberMe);
 
       push('/');
     } catch (err) {
@@ -204,8 +204,8 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
         cancelToken: source.token,
       });
 
-      auth.setToken(token, false);
-      auth.setUserInfo(user, false);
+      // auth.setToken(token, false);
+      // auth.setUserInfo(user, false);
 
       if (
         (authType === 'register' && modifiedData.userInfo.news === true) ||
@@ -249,8 +249,8 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
         cancelToken: source.token,
       });
 
-      auth.setToken(token, false);
-      auth.setUserInfo(user, false);
+      // auth.setToken(token, false);
+      // auth.setUserInfo(user, false);
 
       // Redirect to the homePage
       push('/');

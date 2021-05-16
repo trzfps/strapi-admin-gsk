@@ -10,6 +10,7 @@ import { get, upperFirst } from 'lodash';
 import { auth, LoadingIndicatorPage } from 'strapi-helper-plugin';
 import PageTitle from '../../components/PageTitle';
 import { useModels } from '../../hooks';
+import { useSettingsForm } from '../../hooks';
 
 import useFetch from './hooks';
 import { ALink, Block, Container, LinkWrapper, P, Wave, Separator } from './components';
@@ -62,6 +63,21 @@ const SOCIAL_LINKS = [
 ];
 
 const HomePage = ({ history: { push } }) => {
+
+  const onSubmitSuccessCb = data => data;
+
+  const [
+    { isLoading, },
+    // eslint-disable-next-line no-unused-vars
+    dispatch,
+    { handleCancel, handleChange, handleSubmit },
+  ] = useSettingsForm('/admin/users/me', schema, onSubmitSuccessCb, [
+    'email',
+    'firstname',
+    'lastname',
+    'username',
+  ]);
+
   const { error, isLoading, posts } = useFetch();
   // Temporary until we develop the menu API
   const { collectionTypes, singleTypes, isLoading: isLoadingForModels } = useModels();
@@ -89,7 +105,7 @@ const HomePage = ({ history: { push } }) => {
   const headerId = hasAlreadyCreatedContentTypes
     ? 'HomePage.greetings'
     : 'app.components.HomePage.welcome';
-  const username = get(auth.getUserInfo(), 'firstname', '');
+  const username = get(onSubmitSuccessCb(), 'firstname', '');
   const linkProps = hasAlreadyCreatedContentTypes
     ? {
         id: 'app.components.HomePage.button.blog',
