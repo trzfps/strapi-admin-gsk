@@ -211,8 +211,7 @@ module.exports = {
         authorized: false,
       });
     }
-    ctx.cookies.set("jwtToken", null);
-    ctx.cookies.set("jwtToken.sig", null);
+
     ctx.send({
       authorized: true,
     });
