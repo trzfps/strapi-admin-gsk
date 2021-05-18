@@ -102,9 +102,8 @@ const HomePage = ({ history: { push } }) => {
   const headerId = hasAlreadyCreatedContentTypes
     ? 'HomePage.greetings'
     : 'app.components.HomePage.welcome';
-  console.log(userInfo);
   const username = userInfo.firstname;
-  console.log(usernam);
+  console.log(username);
   const linkProps = hasAlreadyCreatedContentTypes
     ? {
         id: 'app.components.HomePage.button.blog',
