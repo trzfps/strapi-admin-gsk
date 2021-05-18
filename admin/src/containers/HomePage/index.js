@@ -7,7 +7,7 @@
 import React, { memo, useMemo, useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { get, upperFirst } from 'lodash';
-import { auth, LoadingIndicatorPage } from 'strapi-helper-plugin';
+import { auth, LoadingIndicatorPage, request } from 'strapi-helper-plugin';
 import PageTitle from '../../components/PageTitle';
 import { useModels } from '../../hooks';
 
