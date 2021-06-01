@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 
-const defaultJwtOptions = { expiresIn: '30d' };
+const defaultJwtOptions = { expiresIn: '15min' };
 
 const getTokenOptions = () => {
   const { options, secret } = strapi.config.get('server.admin.auth', {});
