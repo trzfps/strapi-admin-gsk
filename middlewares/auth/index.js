@@ -12,6 +12,13 @@ module.exports = strapi => ({
       ) {
         const token = ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) ?  ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : null;
 
+        const isARevokeToken = await strapi.query('revoke', 'admin').findOne({
+          token: token,
+        });
+
+        if(isARevokeToken) {
+          return ctx.forbidden('Invalid credentials');
+        }
 
         const { payload, isValid } = strapi.admin.services.token.decodeJwtToken(token);
 
