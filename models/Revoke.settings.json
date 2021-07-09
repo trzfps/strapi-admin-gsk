@@ -1,7 +1,7 @@
 {
-  "collectionName": "strapi_revoke_tokens",
+  "collectionName": "strapi_revoke",
   "info": {
-    "name": "RevokeTokens",
+    "name": "Revoke",
     "description": ""
   },
   "options": {
