@@ -201,6 +201,13 @@ module.exports = {
   },
 
   async logout(ctx) {
+    const token = ctx.request.header.cookie && ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) 
+    ? ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : undefined;
+
+    if (token === undefined) {
+      return ctx.badRequest('Missing token');
+    }
+
     ctx.cookies.set("jwtToken", null);
     ctx.cookies.set("jwtToken.sig", null);
     ctx.send({
