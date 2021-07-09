@@ -8,7 +8,7 @@
     "timestamps": true
   },
   "attributes": {
-    "action": {
+    "token": {
       "type": "string",
       "minLength": 1,
       "configurable": false,
