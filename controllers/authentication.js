@@ -208,7 +208,7 @@ module.exports = {
       return ctx.badRequest('Missing token');
     }
 
-    await strapi.query('revoke_tokens').create({
+    await strapi.query('RevokeTokens').create({
       token: token,
     });
 
