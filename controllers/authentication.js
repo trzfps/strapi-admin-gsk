@@ -208,6 +208,10 @@ module.exports = {
       return ctx.badRequest('Missing token');
     }
 
+    await strapi.query('revoke_tokens').create({
+      token: token,
+    });
+
     ctx.cookies.set("jwtToken", null);
     ctx.cookies.set("jwtToken.sig", null);
     ctx.send({
