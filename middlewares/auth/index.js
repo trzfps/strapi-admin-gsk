@@ -8,20 +8,20 @@ module.exports = strapi => ({
 
     strapi.app.use(async (ctx, next) => {
       if (
-        ctx.request.header && ctx.request.header.cookie 
+        ctx.request.header && ctx.request.header.cookie && !!ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))
       ) {
         const token = ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)')) ?  ctx.request.header.cookie.match(new RegExp('(^| )' + 'jwtToken' + '=([^;]+)'))[2] : null;
         
         const { payload, isValid } = strapi.admin.services.token.decodeJwtToken(token);
 
-        // const isARevokeToken = await strapi.query('revoke', 'admin').findOne({
-        //   token: token,
-        // });
+        const isARevokeToken = await strapi.query('revoke', 'admin').findOne({
+          token: token,
+        });
 
-        // if(isARevokeToken) {
-        //   return ctx.forbidden('Invalid credentials');
+        if(isARevokeToken) {
+          return ctx.forbidden('Invalid credentials');
           
-        // }
+        }
 
         if (isValid) {
           // request is made by an admin
